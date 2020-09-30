@@ -13,8 +13,8 @@ env:
   global:
     - TRAVIS_TEST_EXCLUDES="--exclude-group slow,pushserver"
     # docker credentials
-    - secure: "j3ss+fkR/BCZuqZP0YUliq7+BUW26k7JdzMlPLwkKuvRJMWY24uizluy+2hsS9amM56wFgwTlTFa2gX2GO9VF4P6b6qIJ7ao0lii9LEowHTeZhfuaWvIdpFCvRyMUsDA/k5z4tqwECWhSTVbkEQica3p0JZYDzSDhsCkvPnSTpw="
-    - secure: "e5qxaqWLnohr4At0ZW/yT/2i6Q9g2OVRwk0trqr13A0J7SeHN6Mxdc9H0U3KdLE4KkPa2pW52sYuLPAOCSfZFYae8q8HzIyAsWVSQQGBoEuSWVCfCu4Q4I2rydrSAYzadBPVm6MOoNsym/+fVb2sHTG8mX6nd/kf7AcWqb8AerM="
+    - secure: "aietzYUXpDYlTN6lP+qSjdpBf2+x+RYd1h/ostE4HWMXQwTkqJlHsE73YTfWOCtiSByUecGZ0axoEsjYCLuUnbAboLZNC8T/u42t/Z8HCF9mQPSluH9oQQyBIhDW1fFNDxf3amwMb7v4w687dsVed8PuhxvL5OcbPZpauz68/bgvCTNB0icwRcSR45oRT03dRVYvxaUHf1oVhyaL4M0AN0KrV00HLocRz4FzezJ7xo/e0iMuDtQQk3DnE5SLzjOfUaz4Tw0GiYqGAm+NgpazKSxtfj4w6w/5hUeKesNHR6afiyXdLVlFvfeJ/knpbelxjrow5WFZgla9OcIWn5s7n8F/z7gQMOXgY6uIhornrAoYWaOrnksoDussv+qM+Fnqdr7+ppTKsyA/23ZCiUpQqNvxAEEFRzWzqyKvBySc2njp7W3V0mCIx4178hXXN6Czx0IpWYyHq70OH8x3G3BcKB8KFYEfe22FzLF5hUX1eSp6RdIM0e38yleLl/t5kFMWEFiq9DteOTjOSVYua+UM0Di4l8kpIhQi0OpkDZXMdaOqepOTL/nmFtURLSJqJvhPcgSJqBMcFzvBC+adLv9xTqfMIo6w2tuw4S4wJ8PAa4T/4aM5aeJkz3sPpfSSDAlKL9pemGT5wW/Y+NEzzhy9RNRWGvFZO24TCQUOjnkquXY="
+    - secure: "ItUm4P62+wnt2h0svGNyPHHnT/gswToX41zK/4fkCP5+et3IMd4mggCkSgqoRS2IfTpCOCRBzPbIYNZFCMVpCl5/ccwR2tJEJyqnJj8Wz7J8ChuE8IFPRHBj4Qx1tKjQXW0Dua0D7fTcf82rCyL/C+9UMWbRoofEbgi68TeoP04eO/r+bUIOoh5dVkkEzRFUTfEyRRFTQo/MOJkBGI/NQ6SHoNUIgjLoBsQyiDTlNLV92H4JdlIeNsnxS37lPBye2HUYtCZIRUW5s4NjyGahGxYDtSoX7AxDgq9ik/Q35kwOQryTyhLoK+deewZBToeJ9cmAllJbUROaYK+UUgSvYT1tvVvTkfVY1f6imaMf10l0cwmKfwGvmPD2FSNWgBcephBFEodGGSZoD+8GcHnc0ZL04ZB2QWYcEDkR6Lx0kLYnyjmwd2reIlMFUw4/9HSzO5AHaXEjnnz1dCpxXCVcWAYJ8L+k8cZ9H+Tq19g3OtNchWPPjQRGkGaq7Yo4TIEyT8gDTYW0zv73kYPfzjCwiUlK7rZ0rkHW9YHCNySqZ5Io6xvpMWPPz2TAy1oN7SnLkoYlyvYE0AA0ndQ3c4R47SlHFOfTLF2Q2cMc6oRSMjewoldUh0qaOa7+GPlP8DG7hkn3ZzmzcNOjDpRwsuvZscPVznx39Vvx3ptHUOV/J8c="
 
   matrix:
     - DB=mysql
@@ -22,24 +22,24 @@ env:
 matrix:
   include:
     # postgres
-    - php: 7.3
-      services: postgresql
-      env: DB=pgsql
-    # sqlite
-    - php: 7.3
-      env: DB=sqlite
-    # httpd-based
-    - php: 7.3
-      env: DB=mysql COMPONENT=HTTPD
-    # push-server
-    - php: 7.3
-      env: DB=mysql COMPONENT=PUSHD
+    # - php: 7.3
+    #   services: postgresql
+    #   env: DB=pgsql
+    # # sqlite
+    # - php: 7.3
+    #   env: DB=sqlite
+    # # httpd-based
+    # - php: 7.3
+    #   env: DB=mysql COMPONENT=HTTPD
+    # # push-server
+    # - php: 7.3
+    #   env: DB=mysql COMPONENT=PUSHD
     # docker
     - php: 7.3
       env: DB=mysql COMPONENT=DOCKER
     # jslint-only
-    - php: 7.3
-      env: DB= JSLINT=true
+    # - php: 7.3
+    #   env: DB= JSLINT=true
 
 # speedup build
 cache:
@@ -131,9 +131,9 @@ script:
 
 after_success:
     - |
-      if [ "$COMPONENT" == "DOCKER" ] && [ "$TRAVIS_BRANCH" == "master" ] && [ "$DOCKER_USER" != "" ]; then
+      if [ "$COMPONENT" == "DOCKER" ] && [ "$DOCKER_USER" != "" ]; then
         docker login -u $DOCKER_USER -p $DOCKER_PASS
-        export REPO=volkszaehler/volkszaehler
+        export REPO=$DOCKER_USER/volkszaehler
         docker run --rm --privileged hypriot/qemu-register
         seihon publish --dry-run=false -v "latest" --image-name $REPO --base-runtime-image php:7.3-alpine
       fi
